@@ -214,13 +214,13 @@
 
             if (settings.nextButton) {
                 $(settings.nextButton).bind("click", function() {
-                    nextSlide(settings.nextType);
+                    nextSlide();
                 });
             }
 
             if (settings.prevButton) {
                 $(settings.prevButton).bind("click", function() {
-                    prevSlide(settings.prevType);
+                    prevSlide();
                 });
             }
 
@@ -233,10 +233,18 @@
             $this.trigger('simpleslider.initialize');
         },
         nextSlide = function(type) {
-            changeSlide((currentSlideIndex+1)%slidesLength, type, 'next');
+            changeSlide(
+                (currentSlideIndex+1)%slidesLength,
+                type || settings.nextType,
+                'next'
+            );
         },
         prevSlide = function(type) {
-            changeSlide((currentSlideIndex-1+slidesLength)%slidesLength, type, 'prev');
+            changeSlide(
+                (currentSlideIndex-1+slidesLength)%slidesLength,
+                type || settings.prevType,
+                'prev'
+            );
         },
         changeSlide = function(nextSlideIndex, type, from) {
 
