@@ -224,43 +224,38 @@
                 });
             }
 
-            $this.bind('mouseenter', function() {
-                $this.trigger('enterSlider', [settings]);
-            });
-            $this.bind('mouseleave', function() {
-                $this.trigger('leaveSlider', [settings]);
-            });
-
             setInterval(function() {
-                if (!settings.autoplay) return;
-                nextSlide();
+                if (settings.autoplay) {
+                    nextSlide();
+                }
             }, settings.interval);
 
-            $this.trigger('initialize', [settings]);
+            $this.trigger('simpleslider.initialize');
         },
         nextSlide = function(type) {
-            changeSlide((currentSlideIndex+1)%slidesLength, type);
+            changeSlide((currentSlideIndex+1)%slidesLength, type, 'next');
         },
         prevSlide = function(type) {
-            changeSlide((currentSlideIndex-1+slidesLength)%slidesLength, type);
+            changeSlide((currentSlideIndex-1+slidesLength)%slidesLength, type, 'prev');
         },
-        changeSlide = function(nextSlideIndex, type) {
+        changeSlide = function(nextSlideIndex, type, from) {
 
             if (isAnimating) return;
             isAnimating = true;
+            from = from || 'change';
 
             var animation = animations[type || settings.type] || animations.fade;
             var currentSlide = $slides.eq(currentSlideIndex);
             var nextSlide = $slides.eq(nextSlideIndex);
 
-            $this.trigger('beforeAnimation', [settings, currentSlide, nextSlide]);
+            $this.trigger('simpleslider.animateBefore', [currentSlide, nextSlide, from]);
 
             animation(
                 currentSlide,
                 nextSlide,
                 function() {
                     isAnimating = false;
-                    $this.trigger('afterAnimation', [settings, currentSlide, nextSlide]);
+                    $this.trigger('simpleslider.animateAfter', [currentSlide, nextSlide]);
                 },
                 settings
             );
@@ -274,7 +269,13 @@
 
         initialize();
 
-        return $this;
+        return {
+            target: $this,
+            nextSlide: nextSlide,
+            prevSlide: prevSlide,
+            changeSlide: changeSlide,
+            settings: settings
+        };
     };
     return $;
 });

@@ -86,13 +86,19 @@ jQuery('#simpleSlider').simpleslider();
 
 - autoplay (default:true)
 
+#### Return
+
+- target
+- nextSlide
+- prevSlide
+- changeSlide
+- settings
+
 #### Trigger
 
-- initialize
-- enterSlider
-- leaveSlider
-- beforeAnimation
-- afterAnimation
+- simpleslider.initialize
+- simpleslider.beforeAnimation
+- simpleslider.afterAnimation
 
 #### Custom Animation
 
