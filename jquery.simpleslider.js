@@ -179,7 +179,6 @@
         $window = $(window),
         $controller = null,
 
-        currentSlideIndex = 0,
         isAnimating = false,
 
         initialize = function() {
@@ -191,13 +190,21 @@
                 top: 0
             });
 
+            var startTarget = $slides.filter('.active');
+            if (startTarget.length === 0) {
+                startTarget = $slides.eq(0).addClass('active');
+            } else if (startTarget.length > 1) {
+                startTarget = startTarget.eq(0).addClass('active');
+                startTarget.siblings().removeClass('active');
+            }
+
             if (settings.controller) {
                 var i;
                 $controller = $("<div class=\"simpleslider-controller\"></div>");
                 for (i = 0; i < slidesLength; i++ ) {
                     $controller.append($("<a class=\"button-" + i + "\"></a>"));
                 }
-                $controller.find("a").eq(currentSlideIndex).addClass("active");
+                $controller.find("a").eq(startTarget.index()).addClass("active");
                 $this.after($controller);
 
                 $controller.find("a").bind("click", function() {
@@ -227,15 +234,17 @@
             $this.trigger('simpleslider.initialize');
         },
         nextSlide = function(type) {
+            var current = $slides.filter('.active').index();
             changeSlide(
-                (currentSlideIndex+1)%slidesLength,
+                (current+1)%slidesLength,
                 type || settings.nextType,
                 'next'
             );
         },
         prevSlide = function(type) {
+            var current = $slides.filter('.active').index();
             changeSlide(
-                (currentSlideIndex-1+slidesLength)%slidesLength,
+                (current-1+slidesLength)%slidesLength,
                 type || settings.prevType,
                 'prev'
             );
@@ -247,11 +256,12 @@
             from = from || 'change';
 
             var animation = animations[type || settings.type] || animations.fade;
-            var currentSlide = $slides.eq(currentSlideIndex);
+            var currentSlide = $slides.filter('.active');
             var nextSlide = $slides.eq(nextSlideIndex);
 
             $this.trigger('simpleslider.animateBefore', [currentSlide, nextSlide, from]);
 
+            nextSlide.addClass('active').siblings().removeClass('active');
             animation(
                 currentSlide,
                 nextSlide,
@@ -265,8 +275,6 @@
             if (settings.controller) {
                 $controller.find("a").removeClass("active").eq(nextSlideIndex).addClass("active");
             }
-
-            currentSlideIndex = nextSlideIndex;
         };
 
         initialize();
