@@ -31,8 +31,7 @@
         autoplay: true
     },
     defaultAnimations = {
-        fade: function(currentSlide, nextSlide, callback, settings) {
-            settings = settings || defaultSettings;
+        fade: function(currentSlide, nextSlide, complete, settings) {
             currentSlide.fadeOut({
                 duration: settings.duration,
                 easing: settings.easing
@@ -40,12 +39,11 @@
             nextSlide.fadeIn({
                 duration: settings.duration,
                 easing: settings.easing,
-                complete: callback
+                complete: complete
             });
         },
-        slideLeft: function(currentSlide, nextSlide, callback, settings) {
+        slideLeft: function(currentSlide, nextSlide, complete, settings) {
             var width = currentSlide.parent().width();
-            settings = settings || defaultSettings;
             currentSlide.css({
                 left: 0
             }).animate({
@@ -64,12 +62,11 @@
             }, {
                 duration: settings.duration,
                 easing: settings.easing,
-                complete: callback
+                complete: complete
             });
         },
-        slideRight: function(currentSlide, nextSlide, callback, settings) {
+        slideRight: function(currentSlide, nextSlide, complete, settings) {
             var width = currentSlide.parent().width();
-            settings = settings || defaultSettings;
             currentSlide.css({
                 left: 0
             }).animate({
@@ -88,12 +85,11 @@
             }, {
                 duration: settings.duration,
                 easing: settings.easing,
-                complete: callback
+                complete: complete
             });
         },
-        slideUp: function(currentSlide, nextSlide, callback, settings) {
+        slideUp: function(currentSlide, nextSlide, complete, settings) {
             var height = currentSlide.parent().height();
-            settings = settings || defaultSettings;
             currentSlide.css({
                 top: 0
             }).animate({
@@ -112,12 +108,11 @@
             }, {
                 duration: settings.duration,
                 easing: settings.easing,
-                complete: callback
+                complete: complete
             });
         },
-        slideDown: function(currentSlide, nextSlide, callback, settings) {
+        slideDown: function(currentSlide, nextSlide, complete, settings) {
             var height = currentSlide.parent().height();
-            settings = settings || defaultSettings;
             currentSlide.css({
                 top: 0
             }).animate({
@@ -136,11 +131,10 @@
             }, {
                 duration: settings.duration,
                 easing: settings.easing,
-                complete: callback
+                complete: complete
             });
         },
-        parallel: function(currentSlide, nextSlide, callback, settings) {
-            settings = settings || defaultSettings;
+        parallel: function(currentSlide, nextSlide, complete, settings) {
             var width = currentSlide.parent().width();
             var slides = currentSlide.parent().children();
             var next = nextSlide.index();
@@ -156,7 +150,7 @@
                     }, {
                         duration: settings.duration,
                         easing: settings.easing,
-                        complete: callback
+                        complete: complete
                     });
                 } else {
                     $slide.css({
