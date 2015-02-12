@@ -1,0 +1,33 @@
+{
+  "name": "jquery.simpleslider",
+  "version": "0.0.1",
+  "homepage": "https://github.com/tastelab-kr/jquery.simpleslider",
+  "authors": [
+    "Changwan Jun <me@wani.kr>"
+  ],
+  "description": "Simple Slider",
+  "main": "jquery.simpleslider.js",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "slideshow",
+    "jquery",
+    "javascript",
+    "simple",
+    "slider",
+    "slide"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "1"
+  }
+}
